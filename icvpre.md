@@ -150,7 +150,7 @@ $ colmap poisson_mesher --input_path $DATASET_PATH/dense/fused.ply --output_path
   - 由NeRF提出
 
 <div align=center>
-<img src='image/2.png'>
+<img src='image/2.png' width=400 height=100>
 </div>
 <!--v-->
 
@@ -237,7 +237,8 @@ Recap: SDF梯度场的ekinoal loss
 - 分析梯度改为数值梯度
   - 允许多个网格的哈希条目同时优化更新
 
-<img src='image/8.png'>
+<img src='image/8.png' width=400 height=150>
+
 <!--v-->
 
 ## Progressive Levels of Details
@@ -251,3 +252,77 @@ Recap: SDF梯度场的ekinoal loss
 - 哈希网格分辨率
   - 最初仅启用粗糙哈希网格
   - 根据步长逐步激活更细的网格
+
+<!--v-->
+
+## LoD-NeuS(Preliminaries)
+
+- Recap: strugglement of NeuS
+  - struggle to capture fine-grained geometry details
+  - low-fidelity ans over-smooth for intricate models
+
+- Anti-aliased Representation
+  - supersampling, slowing down reconstruction
+
+<!--v-->
+## Multi-scale Tri-plane Encoding
+
+<div class='mul-cols'>
+<div class='col'>
+
+- 可学习的编码方式
+
+
+- 理解为中心位于原点小正方体
+
+
+- 每个面包含对应两个维度的特征向量，使用双线性插值
+
+
+- 一系列不同分辨率(like neuralangelo)
+</div>
+<div class='col'>
+<img src='image/9.png' width=200 height=400>
+</div>
+</div>
+<!--v-->
+
+## Anti-aliasing Rendering of Implicit Surfaces
+
+
+
+
+
+- Cone Discrete Sampling
+  - 传统体渲染不考虑像素的大小和形状
+  - 使用视锥离散采样，$W(x,x_0)=exp(-k\Vert x_v-x\Vert)$
+
+<img align=right src='image/10.png' width=300 height=200>
+
+- Multi-convolved Featurization
+  - 根据tri-plane的分辨率大小选择不同的高斯卷积核
+  - $G_v(x_v)=\cup_{l=1}^{L}G(F_l,\tau)$
+  - $Z(x)=\sum_{v=1}^V W(x,x_v)G_v(x_v)$
+
+
+<!--v-->
+
+## SDF-Growth Refinement
+
+- 优化符号距离场
+- 更好捕获细节(薄表面)
+  
+<div align=center>
+<img src='image/11.png' width=500 height=400>
+</div>
+
+
+<!--s-->
+
+<div class="middle center">
+<div style="width: 100%">
+
+# Thank you! Questions?
+
+</div>
+</div>
